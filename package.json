@@ -3,20 +3,32 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "bun eslint --fix --cache --max-warnings 0",
+      "prettier --write"
+    ],
+    "*.{css,md,json}": "prettier --write"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint --max-warnings 0 --ext js,ts,tsx .",
     "preview": "vite preview",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.9",
+    "@tailwindcss/vite": "^4.0.9",
+    "postcss": "^8.5.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.9"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/node": "^22.13.8",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
@@ -25,6 +37,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
     "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "prettier": "3.5.2",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
