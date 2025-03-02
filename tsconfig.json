@@ -9,6 +9,8 @@
     }
   ],
   "compilerOptions": {
-    "types": ["node"]
-  }
+    "types": ["node"],
+    "noImplicitAny": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"]
 }
