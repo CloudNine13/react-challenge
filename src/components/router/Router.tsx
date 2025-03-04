@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
-import { Home } from '../Home';
-import '../Home';
+import { Home } from '../../pages';
+import '../../pages';
 
 //import { PATHS } from './constants';
 
