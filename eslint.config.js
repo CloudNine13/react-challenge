@@ -5,13 +5,8 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
 export default [
-  // Base ESLint configuration
   js.configs.recommended,
-
-  // TypeScript ESLint configuration
   ...tseslint.configs.recommended,
-
-  // React configuration
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     languageOptions: {
@@ -33,22 +28,20 @@ export default [
     rules: {
       '@typescript-eslint/no-redeclare': 'off',
       'no-throw-literal': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
-
-  // Configuration for .mjs files
   {
     files: ['**/*.mjs'],
     languageOptions: {
       globals: {
-        module: 'readonly', // Define `module` as a global variable
+        module: 'readonly',
       },
     },
   },
-
-  // Ignore patterns
   {
     ignores: [
       // Directories

@@ -1,0 +1,1 @@
+export { getTwind } from './twind';
