@@ -1,1 +1,1 @@
-export { validateInput } from './validateInput';
+export { validateInput } from '../../../../../../../../utils/validateInput';

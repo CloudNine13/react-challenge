@@ -1,2 +1,2 @@
 export type { AccommodationType } from './AccommodationType';
-export type * from './Events';
+export type { OwnerType } from './OwnerType';
