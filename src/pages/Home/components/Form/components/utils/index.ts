@@ -1,0 +1,1 @@
+export { imageClassName } from './imageClassName';

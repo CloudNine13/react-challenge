@@ -1,6 +1,6 @@
 import { createRoot, Root } from 'react-dom/client';
 import { getTwind } from '../../../../../../utils';
-import { PhotoUpload, Name, Address, Description, Type } from './components/';
+import { ImageUploader, Name, Address, Description, Type } from './components/';
 import { AccommodationType } from '../../../../../../types';
 import './components';
 
@@ -20,7 +20,7 @@ class AccommodationComponent extends HTMLElement {
     name: '',
     address: '',
     description: '',
-    type: '',
+    type: 'Villa',
     images: [],
   };
 
@@ -96,7 +96,7 @@ class AccommodationComponent extends HTMLElement {
   }
 
   private _getUploadPhoto() {
-    return <PhotoUpload />;
+    return <ImageUploader />;
   }
 
   private _getSubmit() {

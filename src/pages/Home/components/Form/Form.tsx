@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { AccommodationType, OwnerType } from '../../../../types';
 import { FormComponent } from './Form.WC';
+import { displayToast } from '../../../../utils';
+import { ToastTypesEnum } from '../../../../enums';
 
 const Form = () => {
   const [step, setStep] = useState(1);
@@ -11,11 +13,7 @@ const Form = () => {
     type: '',
     images: [],
   });
-  const [, setOwnerInfo] = useState<OwnerType>({
-    name: '',
-    email: '',
-    phone: '',
-  });
+
   const formRef = useRef<FormComponent | null>(null);
 
   const handleAccommodationInfoSubmit = (data: AccommodationType) => {
@@ -24,7 +22,13 @@ const Form = () => {
   };
 
   const handleOwnerInfoSubmit = (data: OwnerType) => {
-    setOwnerInfo(data);
+    const formData = {
+      ...accommodationInfo,
+      ownerName: data.name,
+      phone: data.phone,
+      email: data.email,
+    };
+    formRef.current?.setAttribute('data', JSON.stringify(formData));
     setStep(3);
   };
 
@@ -43,18 +47,16 @@ const Form = () => {
       }
       if (step === 2) {
         form.addEventListener('owner-info-submit', ownerInfoSubmitEvent);
-      } else {
-        form.addEventListener('info-summary', accommodationInfoSubmitEvent);
       }
     }
 
     return () => {
       if (form) {
         form.removeEventListener('accommodation-info-submit', accommodationInfoSubmitEvent);
-        form.removeEventListener('owner-info-submit', accommodationInfoSubmitEvent);
-        form.removeEventListener('info-summary', accommodationInfoSubmitEvent);
+        form.removeEventListener('owner-info-submit', ownerInfoSubmitEvent);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accommodationInfo, step]);
 
   return <wc-form ref={formRef} />;

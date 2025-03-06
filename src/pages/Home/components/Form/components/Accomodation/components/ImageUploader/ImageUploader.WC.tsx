@@ -1,10 +1,11 @@
 import { ToastTypesEnum } from '../../../../../../../../enums';
 import { getTwind, displayToast } from '../../../../../../../../utils';
+import { imageClassName } from '../../../utils';
 import { openImageEventListener } from './utils';
 
 const { sheet, tw } = getTwind();
 
-class ImageUploadComponent extends HTMLElement {
+class ImageUploaderComponent extends HTMLElement {
   private image1: HTMLDivElement;
   private image2: HTMLDivElement;
   private addPhoto: HTMLDivElement;
@@ -16,28 +17,17 @@ class ImageUploadComponent extends HTMLElement {
     this.shadow = this.attachShadow({ mode: 'open' });
     this.shadow.adoptedStyleSheets = [sheet.target];
     const container = document.createElement('div');
-    const photoClassName = (color?: string) => {
-      let bgColor = '';
-
-      if (color === 'green') {
-        bgColor = 'bg-green-100';
-      } else if (color === 'red') {
-        bgColor = 'bg-red-100';
-      }
-
-      return `${tw`w-20 h-20 rounded-xl border-1 border-solid border-black ${bgColor} flex items-center justify-center cursor-pointer`}`;
-    };
 
     container.innerHTML = `
-      <label htmlFor="photos" class="${tw`block font-medium text-gray-700 py-1`}">Photos</label>
-      <div id="photos" class="${tw`grid grid-cols-3 gap-10`}">
-        <div id="photo-1" class="${photoClassName('green')}">
+      <label htmlFor="images" class="${tw`block font-medium text-gray-700 py-1`}">Photos</label>
+      <div id="images" class="${tw`grid grid-cols-3 gap-10`}">
+        <div id="image-1" class="${imageClassName(tw, 'green')}">
             <span class="${tw`text-xs text-gray-500`}">Photo 1</span>
         </div>
-        <div id="photo-2" class="${photoClassName('red')}">
+        <div id="image-2" class="${imageClassName(tw, 'red')}">
           <span class="${tw`text-xs text-gray-500`}">Photo 2</span>
         </div>
-        <div id="add-photo" class="${photoClassName()}">
+        <div id="add-image" class="${imageClassName(tw)}">
           <span class="${tw`text-xs text-indigo-500`}">Add Photo</span>
         </div>
       </div>
@@ -45,9 +35,9 @@ class ImageUploadComponent extends HTMLElement {
 
     this.shadow.appendChild(container);
 
-    this.image1 = this.shadow.getElementById('photo-1') as HTMLDivElement;
-    this.image2 = this.shadow.getElementById('photo-2') as HTMLDivElement;
-    this.addPhoto = this.shadow.getElementById('add-photo') as HTMLDivElement;
+    this.image1 = this.shadow.getElementById('image-1') as HTMLDivElement;
+    this.image2 = this.shadow.getElementById('image-2') as HTMLDivElement;
+    this.addPhoto = this.shadow.getElementById('add-image') as HTMLDivElement;
 
     this.fileInput = document.createElement('input');
     this.fileInput.type = 'file';
@@ -107,6 +97,6 @@ class ImageUploadComponent extends HTMLElement {
   }
 }
 
-customElements.define('wc-image-upload', ImageUploadComponent);
+customElements.define('wc-image-uploader', ImageUploaderComponent);
 
-export { ImageUploadComponent };
+export { ImageUploaderComponent };
