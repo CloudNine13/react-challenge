@@ -1,5 +1,4 @@
-import { getTwind } from '../../../../../../../../utils';
-import { validateInput } from '../utils';
+import { getTwind, validateInput } from '../../../../../../../../utils';
 import { NAME_ERROR_MESSAGES } from './constants';
 
 const { sheet, tw } = getTwind();
@@ -23,8 +22,7 @@ class NameComponent extends HTMLElement {
       name="name"
       class="${tw`block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}"
       minlength="4"
-      maxlength="128"
-      pattern="[A-Za-z]+"
+      maxlength="64"
       required
       novalidate
     />
@@ -61,6 +59,6 @@ class NameComponent extends HTMLElement {
   }
 }
 
-customElements.define('wc-accommodation-name', NameComponent);
+customElements.define('wc-owner-name', NameComponent);
 
 export { NameComponent };

@@ -1,27 +1,25 @@
 import { createRoot, Root } from 'react-dom/client';
 import { getTwind } from '../../../../../../utils';
-import { PhotoUpload, Name, Address, Description, Type } from './components/';
-import { AccommodationType } from '../../../../../../types';
+import { Email, Name, Phone } from './components/';
+import { OwnerType } from '../../../../../../types';
 import './components';
 
 const { sheet, tw } = getTwind();
 
-class AccommodationComponent extends HTMLElement {
+class OwnerComponent extends HTMLElement {
   private shadow: ShadowRoot;
   private root: Root;
 
   private _isValid: Record<string, boolean> = {
     name: false,
-    address: false,
-    type: true,
+    email: false,
+    phone: true,
   };
 
-  private _accommodationInfo: AccommodationType = {
+  private _ownerInfo: OwnerType = {
     name: '',
-    address: '',
-    description: '',
-    type: '',
-    images: [],
+    email: '',
+    phone: '',
   };
 
   constructor() {
@@ -37,36 +35,28 @@ class AccommodationComponent extends HTMLElement {
   }
 
   private _setupEventListeners() {
-    const requiredFields = ['name', 'address', 'description'];
-    const setupListener = (key: keyof AccommodationType) => {
+    const requiredFields = ['name', 'email', 'phone'];
+    const setupListener = (key: keyof OwnerType) => {
       this.shadow.addEventListener(`${key}-info`, (e: Event) => {
         const eventDetail = (e as CustomEvent).detail;
-
-        if (key === 'images') {
-          const images = this._accommodationInfo.images;
-          if (!images.includes(eventDetail.value)) {
-            images.push(eventDetail.value);
-            return;
-          }
-        }
 
         if (requiredFields.includes(key)) {
           this._isValid[key] = Boolean(eventDetail.isValid);
           this._updateSubmitButtonState();
         }
 
-        this._accommodationInfo[key] = eventDetail.value || '';
+        this._ownerInfo[key] = eventDetail.value || '';
       });
     };
 
-    const keys = Object.keys(this._accommodationInfo) as Array<keyof AccommodationType>;
+    const keys = Object.keys(this._ownerInfo) as Array<keyof OwnerType>;
     keys.forEach(setupListener);
 
     this.shadow.addEventListener('submit', (e: Event) => {
       e.preventDefault();
       this.dispatchEvent(
-        new CustomEvent('accommodation-info-submit', {
-          detail: this._accommodationInfo,
+        new CustomEvent('owner-info-submit', {
+          detail: this._ownerInfo,
           bubbles: true,
           composed: true,
         })
@@ -83,20 +73,12 @@ class AccommodationComponent extends HTMLElement {
     return <Name />;
   }
 
-  private _getAddress() {
-    return <Address />;
+  private _getEmail() {
+    return <Email />;
   }
 
-  private _getDescription() {
-    return <Description />;
-  }
-
-  private _getType() {
-    return <Type />;
-  }
-
-  private _getUploadPhoto() {
-    return <PhotoUpload />;
+  private _getPhone() {
+    return <Phone />;
   }
 
   private _getSubmit() {
@@ -113,13 +95,11 @@ class AccommodationComponent extends HTMLElement {
 
   render() {
     const reactNode = (
-      <form id="accommodation-form" className={tw`w-full h-full`}>
+      <form id="owner-form" className={tw`w-full h-full`}>
         <div className={tw`flex flex-col gap-2 w-full h-full p-4`}>
           {this._getName()}
-          {this._getAddress()}
-          {this._getDescription()}
-          {this._getType()}
-          {this._getUploadPhoto()}
+          {this._getEmail()}
+          {this._getPhone()}
           {this._getSubmit()}
         </div>
       </form>
@@ -129,6 +109,6 @@ class AccommodationComponent extends HTMLElement {
   }
 }
 
-customElements.define('wc-accommodation', AccommodationComponent);
+customElements.define('wc-owner', OwnerComponent);
 
-export { AccommodationComponent };
+export { OwnerComponent };

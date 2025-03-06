@@ -1,10 +1,9 @@
-import { getTwind } from '../../../../../../../../utils';
-import { validateInput } from '../utils';
-import { NAME_ERROR_MESSAGES } from './constants';
+import { getTwind, validateInput } from '../../../../../../../../utils';
+import { EMAIL_ERROR_MESSAGES } from './constants';
 
 const { sheet, tw } = getTwind();
 
-class NameComponent extends HTMLElement {
+class PhoneComponent extends HTMLElement {
   private shadow: ShadowRoot;
   private isValid: boolean = true;
 
@@ -14,21 +13,18 @@ class NameComponent extends HTMLElement {
     this.shadow.adoptedStyleSheets = [sheet.target];
     const container = document.createElement('div');
     container.innerHTML = `
-    <label for="name" class="{${tw`block font-medium text-gray-700`}">
-      Name
+    <label for="phone" class="{${tw`block font-medium text-gray-700`}">
+      Phone
     </label>
     <input
       type="text"
-      id="name"
-      name="name"
+      id="phone"
+      name="phone"
       class="${tw`block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}"
-      minlength="4"
-      maxlength="128"
-      pattern="[A-Za-z]+"
-      required
+      pattern="^[0-9]{1,9}$"
       novalidate
     />
-    <span id="name-error" class="${tw`hidden text-xs text-pink-600`}">
+    <span id="phone-error" class="${tw`hidden text-xs text-pink-600`}">
     </span>`;
 
     this.shadow.appendChild(container);
@@ -38,7 +34,7 @@ class NameComponent extends HTMLElement {
     const input = this.shadow.querySelector('input') as HTMLInputElement;
     const error = this.shadow.querySelector('span');
 
-    const callValidator = () => (this.isValid = validateInput(input, error!, NAME_ERROR_MESSAGES));
+    const callValidator = () => (this.isValid = validateInput(input, error!, EMAIL_ERROR_MESSAGES));
 
     input.addEventListener('focus', callValidator);
     input.addEventListener('blur', callValidator);
@@ -51,7 +47,7 @@ class NameComponent extends HTMLElement {
       }
 
       this.dispatchEvent(
-        new CustomEvent('name-info', {
+        new CustomEvent('phone-info', {
           detail,
           bubbles: true,
           composed: true,
@@ -61,6 +57,6 @@ class NameComponent extends HTMLElement {
   }
 }
 
-customElements.define('wc-accommodation-name', NameComponent);
+customElements.define('wc-owner-phone', PhoneComponent);
 
-export { NameComponent };
+export { PhoneComponent };
