@@ -1,5 +1,4 @@
-import { getTwind } from '../../../../../../../../utils';
-import { validateInput } from '../utils';
+import { getTwind, validateInput } from '../../../../../../../../utils';
 import { ADDRESS_ERROR_MESSAGES } from './constants';
 
 const { sheet, tw } = getTwind();

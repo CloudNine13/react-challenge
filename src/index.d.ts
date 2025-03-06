@@ -10,6 +10,7 @@ import {
   OwnerComponent,
   AccomodationComponent,
   TypeComponent,
+  SummaryComponent,
 } from './pages/Home/components/Form/Form';
 
 type CustomElement<T> = Partial<T & DOMAttributes<T> & { children: any }>;
@@ -24,11 +25,13 @@ declare module 'react/jsx-runtime' {
       ['wc-accommodation-address']: CustomElement<AddressComponent>;
       ['wc-accommodation-description']: CustomElement<DescriptionComponent>;
       ['wc-accommodation-type']: CustomElement<TypeComponentComponent>;
-      ['wc-image-upload']: CustomElement<PhotoUploadComponent>;
+      ['wc-image-uploader']: CustomElement<PhotoUploadComponent>;
+      ['wc-image-downloader']: CustomElement<PhotoUploadComponent>;
       ['wc-owner']: CustomElement<OwnerComponent>;
       ['wc-owner-name']: CustomElement<NameComponent>;
       ['wc-owner-email']: CustomElement<EmailComponent>;
       ['wc-owner-phone']: CustomElement<PhoneComponent>;
+      ['wc-summary']: CustomElement<SummaryComponent>;
     }
   }
 }

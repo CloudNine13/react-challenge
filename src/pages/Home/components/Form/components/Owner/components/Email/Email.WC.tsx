@@ -21,7 +21,7 @@ class EmailComponent extends HTMLElement {
       id="email"
       name="email"
       class="${tw`block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}"
-      pattern="[a-zA-Z0-9*%±]+@[a-zA-Z0-9]+.[a-zA-Z]{2,}"
+      pattern="^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+$"
       required
       novalidate
     />

@@ -2,7 +2,6 @@ import { createRoot, Root } from 'react-dom/client';
 import { getTwind } from '../../../../../../utils';
 import { Email, Name, Phone } from './components/';
 import { OwnerType } from '../../../../../../types';
-import './components';
 
 const { sheet, tw } = getTwind();
 
