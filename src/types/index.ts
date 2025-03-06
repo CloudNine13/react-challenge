@@ -1,2 +1,2 @@
-export type { RouteType } from './RouteType';
-export type { RouterType } from './RouterType';
+export type { AccommodationType } from './AccommodationType';
+export type * from './Events';
