@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { AccommodationType, OwnerType } from '../../../../types';
 import { FormComponent } from './Form.WC';
-import { displayToast } from '../../../../utils';
-import { ToastTypesEnum } from '../../../../enums';
 
 const Form = () => {
   const [step, setStep] = useState(1);
