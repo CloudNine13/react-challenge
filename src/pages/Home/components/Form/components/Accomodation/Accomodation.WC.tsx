@@ -1,7 +1,6 @@
 import { createRoot, Root } from 'react-dom/client';
 import { getTwind } from '../../../../../../utils';
 import { ImageUploader, Name, Address, Description, Type } from './components/';
-import { AccommodationType } from '../../../../../../types';
 import './components';
 
 const { sheet, tw } = getTwind();
@@ -9,20 +8,7 @@ const { sheet, tw } = getTwind();
 class AccommodationComponent extends HTMLElement {
   private shadow: ShadowRoot;
   private root: Root;
-
-  private _isValid: Record<string, boolean> = {
-    name: false,
-    address: false,
-    type: true,
-  };
-
-  private _accommodationInfo: AccommodationType = {
-    name: '',
-    address: '',
-    description: '',
-    type: 'Villa',
-    images: [],
-  };
+  private _callback: (() => void) | undefined;
 
   constructor() {
     super();
@@ -33,50 +19,19 @@ class AccommodationComponent extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this._setupEventListeners();
   }
 
-  private _setupEventListeners() {
-    const requiredFields = ['name', 'address', 'description'];
-    const setupListener = (key: keyof AccommodationType) => {
-      this.shadow.addEventListener(`${key}-info`, (e: Event) => {
-        const eventDetail = (e as CustomEvent).detail;
-
-        if (key === 'images') {
-          const images = this._accommodationInfo.images;
-          if (!images.includes(eventDetail.value)) {
-            images.push(eventDetail.value);
-            return;
-          }
-        }
-
-        if (requiredFields.includes(key)) {
-          this._isValid[key] = Boolean(eventDetail.isValid);
-          this._updateSubmitButtonState();
-        }
-
-        this._accommodationInfo[key] = eventDetail.value || '';
-      });
-    };
-
-    const keys = Object.keys(this._accommodationInfo) as Array<keyof AccommodationType>;
-    keys.forEach(setupListener);
-
-    this.shadow.addEventListener('submit', (e: Event) => {
-      e.preventDefault();
-      this.dispatchEvent(
-        new CustomEvent('accommodation-info-submit', {
-          detail: this._accommodationInfo,
-          bubbles: true,
-          composed: true,
-        })
-      );
-    });
-  }
-
-  private _updateSubmitButtonState() {
+  set valid(value: boolean) {
     const button = this.shadow.querySelector('button');
-    button!.disabled = !Object.values(this._isValid).every(Boolean);
+    if (button) button.disabled = value;
+  }
+
+  set callback(value: () => void) {
+    this._callback = value;
+  }
+
+  get callback(): (() => void) | undefined {
+    return this._callback;
   }
 
   private _getName() {
@@ -99,12 +54,11 @@ class AccommodationComponent extends HTMLElement {
     return <ImageUploader />;
   }
 
-  private _getSubmit() {
+  private _getSubmitButton() {
     return (
       <button
         type="submit"
         className={tw`w-full px-4 py-2 mt-auto mb-[50px] text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-30`}
-        disabled
       >
         Next
       </button>
@@ -113,14 +67,20 @@ class AccommodationComponent extends HTMLElement {
 
   render() {
     const reactNode = (
-      <form id="accommodation-form" className={tw`w-full h-full`}>
+      <form
+        className={tw`w-full h-full`}
+        onSubmit={e => {
+          e.preventDefault();
+          this._callback?.();
+        }}
+      >
         <div className={tw`flex flex-col gap-2 w-full h-full p-4`}>
           {this._getName()}
           {this._getAddress()}
           {this._getDescription()}
           {this._getType()}
           {this._getUploadPhoto()}
-          {this._getSubmit()}
+          {this._getSubmitButton()}
         </div>
       </form>
     );

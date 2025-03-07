@@ -41,17 +41,17 @@ const Form = () => {
     if (form) {
       form.step = step;
       if (step === 1) {
-        form.addEventListener('accommodation-info-submit', accommodationInfoSubmitEvent);
+        addEventListener('accommodation-info-submit', accommodationInfoSubmitEvent);
       }
       if (step === 2) {
-        form.addEventListener('owner-info-submit', ownerInfoSubmitEvent);
+        addEventListener('owner-info-submit', ownerInfoSubmitEvent);
       }
     }
 
     return () => {
       if (form) {
-        form.removeEventListener('accommodation-info-submit', accommodationInfoSubmitEvent);
-        form.removeEventListener('owner-info-submit', ownerInfoSubmitEvent);
+        removeEventListener('accommodation-info-submit', accommodationInfoSubmitEvent);
+        removeEventListener('owner-info-submit', ownerInfoSubmitEvent);
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
