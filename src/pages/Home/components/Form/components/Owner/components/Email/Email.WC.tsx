@@ -17,11 +17,11 @@ class EmailComponent extends HTMLElement {
       Email
     </label>
     <input
-      type="text"
+      type="email"
       id="email"
       name="email"
       class="${tw`block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}"
-      pattern="^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+$"
+      pattern="[A-Za-z0-9._+\\-']+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,}$"
       required
       novalidate
     />
